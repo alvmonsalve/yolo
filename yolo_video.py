@@ -172,6 +172,7 @@ def count_vehicles_and_speed(idxs, boxes, classIDs, vehicle_count, previous_fram
 			# it crosses the line AND
 			# the ID of the detection is not present in the vehicles
 			if (LABELS[classIDs[i]] in list_of_vehicles):
+				#current_detections[(centerX, centerY)] = vehicle_count
 				current_detections[(centerX, centerY)] = [ vehicle_count, RingBuffer(capacity=RING_SPEED_SIZE, dtype=np.float)]   # Speed Estimation happens boxInPreviousFrames function
 				if (not boxInPreviousFrames(previous_frame_detections, (centerX, centerY, w, h), current_detections)):
 					vehicle_count += 1
@@ -184,10 +185,12 @@ def count_vehicles_and_speed(idxs, boxes, classIDs, vehicle_count, previous_fram
 				# If there are two detections having the same ID due to being too close, 
 				# then assign a new ID to current detection.
 				if (list(current_detections.values()).count(ID) > 1):
+					#current_detections[(centerX, centerY)] = vehicle_count
 					current_detections[(centerX, centerY)] = [ vehicle_count, RingBuffer(capacity=RING_SPEED_SIZE, dtype=np.float)]
 					vehicle_count += 1 
 
 				#Display the ID at the center of the box
+				#cv2.putText(frame, str(ID[0]) + " " + "{:.2f}".format(np.average(ID[1])), (centerX, centerY),\
 				cv2.putText(frame, str(ID[0]), (centerX, centerY),\
 					cv2.FONT_HERSHEY_SIMPLEX, 0.5, [0,0,255], 2)
 
@@ -310,6 +313,7 @@ while True:
 	# Draw detection box 
 	drawDetectionBoxes(idxs, boxes, classIDs, confidences, frame)
 
+	# TO DO: Add Speed Estimation Calculation. Inside count_vehicles_and_speed function?
 	vehicle_count, current_detections = count_vehicles_and_speed(idxs, boxes, classIDs, vehicle_count, previous_frame_detections, frame)
 
 	# Display Vehicle Count if a vehicle has passed the line 
