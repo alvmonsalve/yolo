@@ -18,7 +18,7 @@ Detection is very effective for both videos. Vehicle speed is estimated for cars
 ## Speed Estimation
 An instantaneous vehicle speed is calculated between video frames, and stored in a cyclic buffer from where the average interval speed is obtained. The vertical vehicle displacement is calculated using the center of the vehicle detection. A convertion factor from pixels to miles per hours were derived for 5 areas of the road. Those 5 areas are depicted by the picture below.
 <p align="center">
-  <img src="https://github.com/alvmonsalve/yolo/blob/938f5399e9a8a225902292743a5dd16c89ccdc2b/SpeedEstimationContours.png>
+  <img src="https://raw.githubusercontent.com/alvmonsalve/yolo/main/SpeedEstimationContours.jpg">
 </p>
 
 The imlementation described above is a very approximate method. We suggest to find the camera location and use triangle geometry to estimate distances.
